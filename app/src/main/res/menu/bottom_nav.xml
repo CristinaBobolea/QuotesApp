@@ -1,0 +1,17 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="com.carintis.quotesapp.MainActivity">
+    <item
+        android:id="@+id/home"
+        android:contentDescription="@string/discover"
+        android:title="@string/discover" />
+    <item
+        android:id="@+id/list"
+        android:contentDescription="@string/favorites"
+        android:title="@string/favorites" />
+    <item
+        android:id="@+id/form"
+        android:contentDescription="@string/more"
+        android:title="@string/more" />
+</menu>
