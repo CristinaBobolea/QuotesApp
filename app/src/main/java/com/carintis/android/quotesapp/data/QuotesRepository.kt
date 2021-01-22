@@ -1,0 +1,42 @@
+package com.carintis.android.quotesapp.data
+
+import com.carintis.android.quotesapp.data.api.Api
+import com.carintis.android.quotesapp.data.cache.Cache
+import com.carintis.android.quotesapp.data.cache.CachedQuote
+import com.carintis.android.quotesapp.domain.Quote
+import com.carintis.android.quotesapp.domain.QuoteRepository
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.map
+
+class QuotesRepository(private val api: Api, private val cache: Cache) : QuoteRepository {
+
+  override fun getCachedQuotes(): Flow<List<Quote>> {
+    return cache.getAllQuotes()
+        .map { quoteList ->
+            quoteList.map { it.toDomainEntity() }
+        }
+  }
+
+  override fun getCachedFavoriteQuotes(): Flow<List<Quote>> {
+    return cache.getFavoriteQuotes()
+        .map { favoriteQuotes ->
+            favoriteQuotes.map { it.toDomainEntity() }
+        }
+  }
+
+    override suspend fun getApiQuote(numberOfImages: Int): Quote {
+        return api.getQuote(1).first()
+    }
+
+  override suspend fun getApiQuotes(numberOfImages: Int): List<Quote> {
+    return api.getQuotes(numberOfImages)
+  }
+
+  override suspend fun updateCachedQuotes(quotes: List<Quote>) {
+    cache.updateCachedQuotes(quotes.map { CachedQuote(it.id, it.title, it.media, it.author, it.cat, it.isFavourite) })
+  }
+
+  override suspend fun updateQuoteFavoriteStatus(quoteId: Long, isFavorite: Boolean) {
+    cache.updateQuoteFavoriteStatus(quoteId, isFavorite)
+  }
+}
