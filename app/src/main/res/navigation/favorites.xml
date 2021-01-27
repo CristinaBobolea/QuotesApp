@@ -25,7 +25,7 @@
       android:label="One Quote"
       tools:layout="@layout/fragment_quote">
     <argument
-        android:name="id"
+        android:name="key"
         app:argType="long" />
     <argument
         android:name="picture"

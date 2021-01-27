@@ -37,11 +37,11 @@ class QuoteFragment : Fragment() {
   override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
     super.onViewCreated(view, savedInstanceState)
 
-    val (id, picture, isFavorite) = args
+    val (key, picture, isFavorite) = args
 
     setSharedElementTransitionOnEnter()
     postponeEnterTransition()
-    setupFavoriteButton(id, isFavorite)
+    setupFavoriteButton(key, isFavorite)
 
     image_view_full_screen_quote.apply {
       transitionName = picture
@@ -57,11 +57,11 @@ class QuoteFragment : Fragment() {
     return item.onNavDestinationSelected(findNavController()) || super.onOptionsItemSelected(item)
   }
 
-  private fun setupFavoriteButton(id: Long, quoteIsFavorite: Boolean) {
+  private fun setupFavoriteButton(key: Long, quoteIsFavorite: Boolean) {
     updateButtonBackground(quoteIsFavorite)
     button_favorite.isChecked = quoteIsFavorite
     button_favorite.setOnCheckedChangeListener { _, isChecked ->
-      viewModel.updateQuoteFavoriteStatus(id, isChecked)
+      viewModel.updateQuoteFavoriteStatus(key, isChecked)
       updateButtonBackground(isChecked)
     }
   }

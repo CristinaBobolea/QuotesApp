@@ -1,5 +1,6 @@
 package com.carintis.android.quotesapp.data.cache
 
+import com.carintis.android.quotesapp.domain.Quote
 import kotlinx.coroutines.flow.Flow
 
 class RoomCache(private val quotesDao: QuotesDao) : Cache {
@@ -19,4 +20,15 @@ class RoomCache(private val quotesDao: QuotesDao) : Cache {
   override fun updateQuoteFavoriteStatus(quoteId: Long, isFavorite: Boolean) {
     quotesDao.update(quoteId, isFavorite)
   }
+
+  override fun doesQuoteExist(quote: CachedQuote): Boolean {
+    return quotesDao.isQuoteExist(quote.id)
+  }
+
+
+  override fun insertQuote(quote: CachedQuote)
+  {
+    return quotesDao.insertQuote(quote)
+  }
+
 }

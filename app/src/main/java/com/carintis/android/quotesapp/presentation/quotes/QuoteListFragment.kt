@@ -54,7 +54,7 @@ class QuoteListFragment : Fragment() {
           view to quote.media
       )
       val toQuoteFragment =
-          QuoteListFragmentDirections.toQuoteFragment(quote.id, quote.media, quote.isFavourite)
+          QuoteListFragmentDirections.toQuoteFragment(quote.key, quote.media, quote.isFavourite)
 
       navigate(toQuoteFragment, extraInfoForSharedElement)
     }

@@ -33,7 +33,12 @@ class QuotesRepository(private val api: Api, private val cache: Cache) : QuoteRe
   }
 
   override suspend fun updateCachedQuotes(quotes: List<Quote>) {
-    cache.updateCachedQuotes(quotes.map { CachedQuote(it.id, it.title, it.media, it.author, it.cat, it.isFavourite) })
+
+      for ( quote in quotes.map { CachedQuote(it.key, it.id, it.title, it.media, it.author, it.cat, it.isFavourite) })
+      {
+          if (!cache.doesQuoteExist(quote))
+              cache.insertQuote(quote)
+      }
   }
 
   override suspend fun updateQuoteFavoriteStatus(quoteId: Long, isFavorite: Boolean) {

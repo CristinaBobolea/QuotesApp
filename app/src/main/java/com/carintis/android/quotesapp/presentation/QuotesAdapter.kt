@@ -46,22 +46,34 @@ class QuotesAdapter(
     private val onQuoteClickListener: ((view: View, quote: Quote) -> Unit)? = null
 ) : ListAdapter<Quote, QuotesAdapter.QuoteViewHolder>(ITEM_COMPARATOR) {
 
+    init {
+        setHasStableIds(true);
+    }
   override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): QuoteViewHolder {
     val inflater = LayoutInflater.from(parent.context)
-
-    return QuoteViewHolder(
+    val holder =  QuoteViewHolder(
         inflater.inflate(
             R.layout.recycler_view_quote_item,
             parent,
             false
         )
     )
+      holder.setIsRecyclable(false)
+      return holder
   }
 
   override fun onBindViewHolder(holder: QuoteViewHolder, position: Int) {
-    val item: Quote = getItem(position)
+      val item: Quote = getItem(position)
     holder.bind(item, onQuoteClickListener)
   }
+
+    override fun getItemId(position: Int): Long {
+        return position.toLong()
+    }
+
+    override fun getItemViewType(position: Int): Int {
+        return position
+    }
 
   // Need to implement LayoutContainer so that views are cached correctly
   class QuoteViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView),
@@ -88,7 +100,7 @@ class QuotesAdapter(
 
 private val ITEM_COMPARATOR = object : DiffUtil.ItemCallback<Quote>() {
   override fun areItemsTheSame(oldItem: Quote, newItem: Quote): Boolean {
-    return oldItem.media == newItem.media
+    return oldItem.key == newItem.key
   }
 
   override fun areContentsTheSame(oldItem: Quote, newItem: Quote): Boolean {

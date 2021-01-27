@@ -8,4 +8,7 @@ interface Cache {
   fun getFavoriteQuotes(): Flow<List<CachedQuote>>
   fun updateCachedQuotes(quotes: List<CachedQuote>)
   fun updateQuoteFavoriteStatus(quoteId: Long, isFavorite: Boolean)
-}
+  fun doesQuoteExist(quote: CachedQuote): Boolean
+  fun insertQuote(quote: CachedQuote)
+
+  }

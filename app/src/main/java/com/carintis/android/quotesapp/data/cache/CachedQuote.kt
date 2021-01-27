@@ -8,8 +8,9 @@ import com.google.gson.annotations.SerializedName
 
 @Entity(tableName = "Quotes")
 data class CachedQuote(
-    @PrimaryKey
-     val id : Long,
+    @PrimaryKey(autoGenerate = true)
+    val key : Long,
+    val id : Long,
     val title: String,
     val media: String,
     val author: String,
@@ -17,5 +18,5 @@ data class CachedQuote(
     val isFavourite: Boolean = false
 ) {
 
-  fun toDomainEntity(): Quote = Quote(id, title,media,author,cat, isFavourite)
+  fun toDomainEntity(): Quote = Quote(key, id, title,media,author,cat, isFavourite)
 }

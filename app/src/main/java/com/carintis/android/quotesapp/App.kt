@@ -40,5 +40,6 @@ class App : Application() {
 
   private fun createDatabase(): QuotesDatabase =
       Room.databaseBuilder(this, QuotesDatabase::class.java, "quotes.db")
+        .fallbackToDestructiveMigration()
           .build()
 }
