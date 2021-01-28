@@ -28,6 +28,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:maxImageSize="32dp"
+        app:fabCustomSize="70dp"
         app:srcCompat="@drawable/ic_filter"
         app:tint="@color/white" />
 </androidx.constraintlayout.widget.ConstraintLayout>

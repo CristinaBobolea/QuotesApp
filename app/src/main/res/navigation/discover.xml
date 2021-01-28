@@ -43,5 +43,9 @@
         android:id="@+id/filtersDialogFragment"
         android:name="com.carintis.android.quotesapp.presentation.about.FilterFragment"
         android:label="About"
-        tools:layout="@layout/fragment_filter"/>
+        tools:layout="@layout/fragment_filter">
+        <action
+            android:id="@+id/to_discoverList"
+            app:destination="@id/discoverListFragment" />
+    </dialog>
 </navigation>
