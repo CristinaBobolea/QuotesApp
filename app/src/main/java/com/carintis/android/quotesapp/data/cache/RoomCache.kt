@@ -1,5 +1,6 @@
 package com.carintis.android.quotesapp.data.cache
 
+import com.carintis.android.quotesapp.data.api.Categories
 import com.carintis.android.quotesapp.domain.Quote
 import kotlinx.coroutines.flow.Flow
 
@@ -30,5 +31,10 @@ class RoomCache(private val quotesDao: QuotesDao) : Cache {
   {
     return quotesDao.insertQuote(quote)
   }
+
+  override fun getFilteredQuotes(category: String) : Flow<List<CachedQuote>> {
+    return quotesDao.filteredQuotes(category)
+  }
+
 
 }

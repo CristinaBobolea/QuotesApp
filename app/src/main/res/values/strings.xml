@@ -12,4 +12,11 @@
   <string name="author">Author</string>
   <string name="quote">Quote</string>
   <string name="quotePicture">QuotePicture</string>
+  <string name="done">Done</string>
+  <string name="filter">Filter</string>
+  <string name="category">Category</string>
+
+  <string name="defaultChannel">DonutTracker default channel</string>
+  <string name="notificationDescription">Notifications from DonutTracker</string>
+  <string name="deepLinkNotificationTitle">Deep Link</string>
 </resources>

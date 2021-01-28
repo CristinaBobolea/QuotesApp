@@ -30,4 +30,6 @@ interface QuotesDao {
   @Query("SELECT * FROM Quotes WHERE id = :id")
   fun isQuoteExist(id: Long): Boolean
 
+  @Query("SELECT * FROM Quotes WHERE cat LIKE :cat")
+  fun filteredQuotes(cat: String):  Flow<List<CachedQuote>>
 }

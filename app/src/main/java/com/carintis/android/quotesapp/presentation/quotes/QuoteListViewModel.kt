@@ -25,13 +25,21 @@ class QuoteListViewModel(
     const val PAGE_SIZE = 10
   }
 
+  val shouldRefresh : Boolean
+  get() = _shouldRefresh
+
   val quoteList: LiveData<List<Quote>>
     get() = _quoteList
 
   private val _quoteList: MutableLiveData<List<Quote>> = MutableLiveData()
+  private var _shouldRefresh : Boolean = false
 
   init {
     observeCacheUpdates()
+  }
+
+  fun refreshList() {
+    _shouldRefresh = true
   }
 
   fun getMoreQuotes(numberOfQuotes: Int) {
@@ -57,6 +65,7 @@ class QuoteListViewModel(
           .collect { handleQuotes(it) }
     }
   }
+
 
   private fun handleQuotes(quotes: List<Quote>) {
     _quoteList.value = quotes

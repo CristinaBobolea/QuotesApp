@@ -8,6 +8,7 @@ import com.carintis.android.quotesapp.data.api.ConnectionManager
 import com.carintis.android.quotesapp.data.cache.QuotesDatabase
 import com.carintis.android.quotesapp.data.cache.RoomCache
 import com.carintis.android.quotesapp.domain.QuoteRepository
+import com.carintis.android.quotesapp.presentation.about.FilterDialogViewModelFactory
 import com.carintis.android.quotesapp.presentation.quotedetail.QuoteViewModelFactory
 import com.carintis.android.quotesapp.presentation.quotes.QuoteListViewModelFactory
 import com.carintis.android.quotesapp.presentation.favorites.FavoritesViewModelFactory
@@ -27,6 +28,7 @@ class App : Application() {
     QuoteListViewModelFactory.inject(repository)
     QuoteViewModelFactory.inject(repository)
     FavoritesViewModelFactory.inject(repository)
+    FilterDialogViewModelFactory.inject(repository)
   }
 
   private fun createRepository(): QuoteRepository {

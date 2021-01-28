@@ -40,7 +40,7 @@
 
   <fragment
       android:id="@+id/aboutFragment"
-      android:name="com.carintis.android.quotesapp.presentation.about.AboutFragment"
+      android:name="com.carintis.android.quotesapp.presentation.about.FilterFragment"
       android:label="About"
-      tools:layout="@layout/fragment_about" />
+      tools:layout="@layout/fragment_filter" />
 </navigation>

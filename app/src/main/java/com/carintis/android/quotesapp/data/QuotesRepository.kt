@@ -1,6 +1,7 @@
 package com.carintis.android.quotesapp.data
 
 import com.carintis.android.quotesapp.data.api.Api
+import com.carintis.android.quotesapp.data.api.Categories
 import com.carintis.android.quotesapp.data.cache.Cache
 import com.carintis.android.quotesapp.data.cache.CachedQuote
 import com.carintis.android.quotesapp.domain.Quote
@@ -10,11 +11,18 @@ import kotlinx.coroutines.flow.map
 
 class QuotesRepository(private val api: Api, private val cache: Cache) : QuoteRepository {
 
+   private var _category : String = Categories.All.toString()
+
   override fun getCachedQuotes(): Flow<List<Quote>> {
-    return cache.getAllQuotes()
-        .map { quoteList ->
-            quoteList.map { it.toDomainEntity() }
-        }
+      return if (_category == Categories.All.toString())
+          cache.getAllQuotes()
+              .map { quoteList ->
+                  quoteList.map { it.toDomainEntity() }
+              }
+      else
+          cache.getFilteredQuotes("$_category%").map { quoteList ->
+              quoteList.map { it.toDomainEntity() }
+          }
   }
 
   override fun getCachedFavoriteQuotes(): Flow<List<Quote>> {
@@ -29,7 +37,7 @@ class QuotesRepository(private val api: Api, private val cache: Cache) : QuoteRe
     }
 
   override suspend fun getApiQuotes(numberOfImages: Int): List<Quote> {
-    return api.getQuotes(numberOfImages)
+    return api.getQuotes(numberOfImages )
   }
 
   override suspend fun updateCachedQuotes(quotes: List<Quote>) {
@@ -44,4 +52,8 @@ class QuotesRepository(private val api: Api, private val cache: Cache) : QuoteRe
   override suspend fun updateQuoteFavoriteStatus(quoteId: Long, isFavorite: Boolean) {
     cache.updateQuoteFavoriteStatus(quoteId, isFavorite)
   }
+
+    override suspend fun setCategoryFilter(category: String) {
+        _category = category
+    }
 }

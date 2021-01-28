@@ -54,19 +54,10 @@ interface Api {
     suspend fun getQuote(@Query("maxR") numberOfQuotes : Int ): List<Quote>
 
     @GET("?size=medium")
-    suspend fun getQuotes(@Query("maxR") numberOfQuotes : Int) : List<Quote>
-//
-//    @GET("search.json")
-//    fun searchByAuthor(
-//        @Query("author") authorQuery: String,
-//        @Query("page") page: Int
-//    ): Call<SearchResponse>
-//
-//    @GET("search.json")
-//    fun search(
-//        @Query("q") searchQuery: String,
-//        @Query("page") page: Int
-//    ): Call<SearchResponse>
+    suspend fun getQuotes(@Query("maxR") numberOfQuotes : Int ) : List<Quote>
+
+    @GET()
+    suspend fun getFilteredQuotes(@Query("maxR") numberOfQuotes : Int, @Query("t") topic : String, @Query("size") size : String = "medium") : List<Quote>
 
     companion object {
     private const val TAG = "Api"

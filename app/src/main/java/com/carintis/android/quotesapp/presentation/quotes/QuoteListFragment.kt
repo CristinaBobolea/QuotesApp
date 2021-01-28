@@ -11,11 +11,14 @@ import androidx.navigation.NavDirections
 import androidx.navigation.fragment.FragmentNavigator
 import androidx.navigation.fragment.FragmentNavigatorExtras
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.transition.TransitionInflater
 import com.carintis.android.quotesapp.R
 import com.carintis.android.quotesapp.presentation.QuotesAdapter
+import com.carintis.android.quotesapp.presentation.quotedetail.QuoteFragmentArgs
+import kotlinx.android.synthetic.main.fragment_quote_list.*
 import kotlinx.android.synthetic.main.fragment_quote_list.view.*
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.InternalCoroutinesApi
@@ -24,8 +27,12 @@ import kotlinx.coroutines.InternalCoroutinesApi
 @InternalCoroutinesApi
 class QuoteListFragment : Fragment() {
 
+  private val args: QuoteListFragmentArgs by navArgs()
+
   private val viewModel: QuoteListViewModel by viewModels { QuoteListViewModelFactory }
   private var isLoadingMoreItems = false
+
+  private var shouldRefreshList : Boolean = false
 
   override fun onCreateView(
       inflater: LayoutInflater,
@@ -43,6 +50,17 @@ class QuoteListFragment : Fragment() {
 
   override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
     super.onViewCreated(view, savedInstanceState)
+
+    val (shouldRefresh) = args
+
+    shouldRefreshList = shouldRefresh
+
+    val extraInfoForSharedElement = FragmentNavigatorExtras()
+
+    fab.setOnClickListener()
+    {
+      navigate(QuoteListFragmentDirections.toFiltersDialog(), extraInfoForSharedElement)
+    }
 
     setExitToFullScreenTransition()
     setReturnFromFullScreenTransition()

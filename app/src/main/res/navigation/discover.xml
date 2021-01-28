@@ -11,6 +11,11 @@ xmlns:tools="http://schemas.android.com/tools"
         android:name="com.carintis.android.quotesapp.presentation.quotes.QuoteListFragment"
         android:label="@string/discoverQuotes"
         tools:layout="@layout/fragment_quote_list">
+        <argument
+            android:name="shouldRefresh"
+            app:argType="boolean"
+            android:defaultValue="false"
+            />
         <action
             android:id="@+id/to_quoteFragment"
             app:destination="@id/quoteFragment"
@@ -18,6 +23,9 @@ xmlns:tools="http://schemas.android.com/tools"
             app:exitAnim="@anim/fragment_fade_exit"
             app:popEnterAnim="@anim/fragment_fade_enter"
             app:popExitAnim="@anim/fragment_fade_exit" />
+        <action
+            android:id="@+id/to_filtersDialog"
+            app:destination="@id/filtersDialogFragment"/>
     </fragment>
 
     <fragment
@@ -34,14 +42,16 @@ xmlns:tools="http://schemas.android.com/tools"
         <argument
             android:name="isFavorite"
             app:argType="boolean" />
-        <action
-            android:id="@+id/to_aboutFragment"
-            app:destination="@id/aboutFragment" />
     </fragment>
 
-    <fragment
-        android:id="@+id/aboutFragment"
-        android:name="com.carintis.android.quotesapp.presentation.about.AboutFragment"
+    <dialog
+        android:id="@+id/filtersDialogFragment"
+        android:name="com.carintis.android.quotesapp.presentation.about.FilterFragment"
         android:label="About"
-        tools:layout="@layout/fragment_about" />
+        tools:layout="@layout/fragment_filter"
+        >
+        <action
+            android:id="@+id/to_discoverList"
+            app:destination="@id/discoverListFragment"/>
+    </dialog>
 </navigation>

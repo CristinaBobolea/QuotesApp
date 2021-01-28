@@ -1,5 +1,6 @@
 package com.carintis.android.quotesapp.data.cache
 
+import com.carintis.android.quotesapp.data.api.Categories
 import kotlinx.coroutines.flow.Flow
 
 interface Cache {
@@ -10,5 +11,5 @@ interface Cache {
   fun updateQuoteFavoriteStatus(quoteId: Long, isFavorite: Boolean)
   fun doesQuoteExist(quote: CachedQuote): Boolean
   fun insertQuote(quote: CachedQuote)
-
+  fun getFilteredQuotes(category: String) : Flow<List<CachedQuote>>
   }
