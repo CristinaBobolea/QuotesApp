@@ -65,4 +65,8 @@ class QuotesRepository(private val api: Api, private val cache: Cache) : QuoteRe
     override suspend fun setCategoryFilter(category: String) {
         _category = category
     }
+
+    override fun getCurrentCategoryFilter(): String {
+        return _category
+    }
 }

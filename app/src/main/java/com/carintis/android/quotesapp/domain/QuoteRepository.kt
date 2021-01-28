@@ -11,4 +11,6 @@ interface QuoteRepository {
     suspend fun updateCachedQuotes(quotes: List<Quote>)
     suspend fun updateQuoteFavoriteStatus(quoteId: Long, isFavorite: Boolean)
     suspend fun setCategoryFilter(category: String)
+    fun getCurrentCategoryFilter(): String
+
 }

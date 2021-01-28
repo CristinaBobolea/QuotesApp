@@ -14,5 +14,7 @@ class FilterDialogViewModel(private val repository: QuoteRepository) : ViewModel
         }
     }
 
-
+    fun getCurrentCategory(): String {
+        return repository.getCurrentCategoryFilter()
+    }
 }

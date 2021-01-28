@@ -1,6 +1,5 @@
 package com.carintis.android.quotesapp.presentation.about
 
-import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -8,19 +7,13 @@ import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.observe
 import androidx.navigation.NavDirections
 import androidx.navigation.fragment.FragmentNavigator
 import androidx.navigation.fragment.FragmentNavigatorExtras
 import androidx.navigation.fragment.findNavController
 import com.carintis.android.quotesapp.R
 import com.carintis.android.quotesapp.data.api.Categories
-import com.carintis.android.quotesapp.presentation.QuotesAdapter
-import com.carintis.android.quotesapp.presentation.quotedetail.QuoteViewModel
-import com.carintis.android.quotesapp.presentation.quotedetail.QuoteViewModelFactory
-import com.carintis.android.quotesapp.presentation.quotes.QuoteListFragmentDirections
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
-import kotlinx.android.synthetic.main.fragment_favorites.*
 import kotlinx.android.synthetic.main.fragment_filter.*
 
 class FilterFragment : BottomSheetDialogFragment() {
@@ -53,6 +46,7 @@ class FilterFragment : BottomSheetDialogFragment() {
             dismiss()
         }
     }
+
     private fun initCategoriesSpinner() {
         val adapter = ArrayAdapter<String>(
             spnCategories.context,
@@ -62,8 +56,10 @@ class FilterFragment : BottomSheetDialogFragment() {
             }
         )
         adapter.setDropDownViewResource(android.R.layout.simple_list_item_1)
-
         spnCategories.adapter = adapter
+
+        var position = adapter.getPosition(viewModel.getCurrentCategory())
+        spnCategories.setSelection(position)
 
         spnCategories.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
             override fun onItemSelected(p0: AdapterView<*>?, p1: View?, p2: Int, p3: Long) {
@@ -75,8 +71,9 @@ class FilterFragment : BottomSheetDialogFragment() {
         }
     }
 
-    private fun navigate(destination: NavDirections, extraInfo: FragmentNavigator.Extras) = with(findNavController()) {
-        currentDestination?.getAction(destination.actionId)
-            ?.let { navigate(destination, extraInfo) }
-    }
+    private fun navigate(destination: NavDirections, extraInfo: FragmentNavigator.Extras) =
+        with(findNavController()) {
+            currentDestination?.getAction(destination.actionId)
+                ?.let { navigate(destination, extraInfo) }
+        }
 }
