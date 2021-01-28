@@ -23,73 +23,80 @@ import kotlinx.coroutines.InternalCoroutinesApi
 @ExperimentalCoroutinesApi
 @InternalCoroutinesApi
 class FavoritesFragment : Fragment() {
-  private val viewModel: FavoritesViewModel by viewModels { FavoritesViewModelFactory }
+    private val viewModel: FavoritesViewModel by viewModels { FavoritesViewModelFactory }
 
-  override fun onCreateView(
+    override fun onCreateView(
       inflater: LayoutInflater,
       container: ViewGroup?,
       savedInstanceState: Bundle?
-  ): View? {
-    val view = inflater.inflate(R.layout.fragment_favorites, container, false)
+    ): View? {
+        val view = inflater.inflate(R.layout.fragment_favorites, container, false)
 
-    val quotesAdapter = createAdapter()
+        val quotesAdapter = createAdapter()
 
-    setupRecyclerView(view, quotesAdapter)
-    observeViewModel(quotesAdapter)
+        setupRecyclerView(view, quotesAdapter)
+        observeViewModel(quotesAdapter)
 
-    return view
-  }
-
-  override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-    super.onViewCreated(view, savedInstanceState)
-
-    setExitToFullScreenTransition()
-    setReturnFromFullScreenTransition()
-  }
-
-  private fun setupRecyclerView(view: View, quotesAdapter: QuotesAdapter) {
-    view.recycler_view_favorite_quotes.run {
-      adapter = quotesAdapter
-      setHasFixedSize(true)
+        return view
     }
-  }
 
-  private fun createAdapter(): QuotesAdapter {
-    return QuotesAdapter { view, quote ->
-      val extraInfoForSharedElement = FragmentNavigatorExtras(
-        view to quote.media
-      )
-      val toQuoteFragment =
-        QuoteListFragmentDirections.toQuoteFragment(quote.key, quote.media, quote.isFavourite)
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
 
-      navigate(toQuoteFragment, extraInfoForSharedElement)
+        setExitToFullScreenTransition()
+        setReturnFromFullScreenTransition()
     }
-  }
 
-  private fun observeViewModel(quotesAdapter: QuotesAdapter) {
-    viewModel.favoriteQuotes.observe(viewLifecycleOwner) {
-      quotesAdapter.submitList(it)
-
-      if (it.isEmpty()) {
-        text_view_no_favorites.visibility = View.VISIBLE
-      } else {
-        text_view_no_favorites.visibility = View.INVISIBLE
-      }
+    private fun setupRecyclerView(view: View, quotesAdapter: QuotesAdapter) {
+        view.recycler_view_favorite_quotes.run {
+            adapter = quotesAdapter
+            setHasFixedSize(true)
+        }
     }
-  }
 
-  private fun setExitToFullScreenTransition() {
-    exitTransition =
-      TransitionInflater.from(context).inflateTransition(R.transition.quote_list_exit_transition)
-  }
+    private fun createAdapter(): QuotesAdapter {
+        return QuotesAdapter { view, quote ->
+            val extraInfoForSharedElement = FragmentNavigatorExtras(
+              view to quote.media
+            )
+            val toQuoteFragment =
+                QuoteListFragmentDirections.toQuoteFragment(
+                  quote.key,
+                  quote.media,
+                  quote.isFavourite
+                )
 
-  private fun setReturnFromFullScreenTransition() {
-    reenterTransition =
-      TransitionInflater.from(context).inflateTransition(R.transition.quote_list_return_transition)
-  }
+            navigate(toQuoteFragment, extraInfoForSharedElement)
+        }
+    }
 
-  private fun navigate(destination: NavDirections, extraInfo: FragmentNavigator.Extras) = with(findNavController()) {
-    currentDestination?.getAction(destination.actionId)
-      ?.let { navigate(destination, extraInfo) }
-  }
+    private fun observeViewModel(quotesAdapter: QuotesAdapter) {
+        viewModel.favoriteQuotes.observe(viewLifecycleOwner) {
+            quotesAdapter.submitList(it)
+
+            if (it.isEmpty()) {
+                text_view_no_favorites.visibility = View.VISIBLE
+            } else {
+                text_view_no_favorites.visibility = View.INVISIBLE
+            }
+        }
+    }
+
+    private fun setExitToFullScreenTransition() {
+        exitTransition =
+            TransitionInflater.from(context)
+                .inflateTransition(R.transition.quote_list_exit_transition)
+    }
+
+    private fun setReturnFromFullScreenTransition() {
+        reenterTransition =
+            TransitionInflater.from(context)
+                .inflateTransition(R.transition.quote_list_return_transition)
+    }
+
+    private fun navigate(destination: NavDirections, extraInfo: FragmentNavigator.Extras) =
+        with(findNavController()) {
+            currentDestination?.getAction(destination.actionId)
+                ?.let { navigate(destination, extraInfo) }
+        }
 }

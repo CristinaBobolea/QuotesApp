@@ -1,46 +1,46 @@
 <?xml version="1.0" encoding="utf-8"?>
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
-  xmlns:app="http://schemas.android.com/apk/res-auto"
-  xmlns:tools="http://schemas.android.com/tools"
-  android:id="@+id/favoriteList"
-  app:startDestination="@id/favoritesFragment">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/favoriteList"
+    app:startDestination="@id/favoritesFragment">
 
-  <fragment
-    android:id="@+id/favoritesFragment"
-    android:name="com.carintis.android.quotesapp.presentation.favorites.FavoritesFragment"
-    android:label="Favorites"
-    tools:layout="@layout/fragment_favorites" >
-    <action
-        android:id="@+id/to_quoteFragment"
-        app:destination="@id/quoteFragment"
-        app:enterAnim="@anim/fragment_fade_enter"
-        app:exitAnim="@anim/fragment_fade_exit"
-        app:popEnterAnim="@anim/fragment_fade_enter"
-        app:popExitAnim="@anim/fragment_fade_exit" />
-  </fragment>
+    <fragment
+        android:id="@+id/favoritesFragment"
+        android:name="com.carintis.android.quotesapp.presentation.favorites.FavoritesFragment"
+        android:label="Favorites"
+        tools:layout="@layout/fragment_favorites">
+        <action
+            android:id="@+id/to_quoteFragment"
+            app:destination="@id/quoteFragment"
+            app:enterAnim="@anim/fragment_fade_enter"
+            app:exitAnim="@anim/fragment_fade_exit"
+            app:popEnterAnim="@anim/fragment_fade_enter"
+            app:popExitAnim="@anim/fragment_fade_exit" />
+    </fragment>
 
-  <fragment
-      android:id="@+id/quoteFragment"
-      android:name="com.carintis.android.quotesapp.presentation.quotedetail.QuoteFragment"
-      android:label="One Quote"
-      tools:layout="@layout/fragment_quote">
-    <argument
-        android:name="key"
-        app:argType="long" />
-    <argument
-        android:name="picture"
-        app:argType="string" />
-    <argument
-        android:name="isFavorite"
-        app:argType="boolean" />
-    <action
-        android:id="@+id/to_aboutFragment"
-        app:destination="@id/aboutFragment" />
-  </fragment>
+    <fragment
+        android:id="@+id/quoteFragment"
+        android:name="com.carintis.android.quotesapp.presentation.quotedetail.QuoteFragment"
+        android:label="One Quote"
+        tools:layout="@layout/fragment_quote">
+        <argument
+            android:name="key"
+            app:argType="long" />
+        <argument
+            android:name="picture"
+            app:argType="string" />
+        <argument
+            android:name="isFavorite"
+            app:argType="boolean" />
+        <action
+            android:id="@+id/to_aboutFragment"
+            app:destination="@id/aboutFragment" />
+    </fragment>
 
-  <fragment
-      android:id="@+id/aboutFragment"
-      android:name="com.carintis.android.quotesapp.presentation.about.FilterFragment"
-      android:label="About"
-      tools:layout="@layout/fragment_filter" />
+    <fragment
+        android:id="@+id/aboutFragment"
+        android:name="com.carintis.android.quotesapp.presentation.about.FilterFragment"
+        android:label="About"
+        tools:layout="@layout/fragment_filter" />
 </navigation>

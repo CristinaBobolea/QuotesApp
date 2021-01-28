@@ -11,13 +11,13 @@ import kotlinx.coroutines.InternalCoroutinesApi
 @Suppress("UNCHECKED_CAST")
 object QuoteListViewModelFactory : ViewModelProvider.Factory {
 
-  private lateinit var repository: QuoteRepository
+    private lateinit var repository: QuoteRepository
 
-  fun inject(repository: QuoteRepository) {
-    QuoteListViewModelFactory.repository = repository
-  }
+    fun inject(repository: QuoteRepository) {
+        QuoteListViewModelFactory.repository = repository
+    }
 
-  override fun <T : ViewModel?> create(modelClass: Class<T>): T {
-    return QuoteListViewModel(repository) as T
-  }
+    override fun <T : ViewModel?> create(modelClass: Class<T>): T {
+        return QuoteListViewModel(repository) as T
+    }
 }

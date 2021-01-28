@@ -21,53 +21,45 @@ class QuoteListViewModel(
     private val repository: QuoteRepository
 ) : ViewModel() {
 
-  companion object {
-    const val PAGE_SIZE = 10
-  }
-
-  val shouldRefresh : Boolean
-  get() = _shouldRefresh
-
-  val quoteList: LiveData<List<Quote>>
-    get() = _quoteList
-
-  private val _quoteList: MutableLiveData<List<Quote>> = MutableLiveData()
-  private var _shouldRefresh : Boolean = false
-
-  init {
-    observeCacheUpdates()
-  }
-
-  fun refreshList() {
-    _shouldRefresh = true
-  }
-
-  fun getMoreQuotes(numberOfQuotes: Int) {
-    updateCacheWithQuotesFromApi(numberOfQuotes)
-  }
-
-  private fun updateCacheWithQuotesFromApi(numberOfQuotes: Int) {
-    viewModelScope.launch(Dispatchers.IO) {
-      val quotes = repository.getApiQuotes(numberOfQuotes)
-      repository.updateCachedQuotes(quotes)
+    companion object {
+        const val PAGE_SIZE = 10
     }
-  }
 
-  private fun observeCacheUpdates() {
-    viewModelScope.launch {
-      repository.getCachedQuotes()
-          .onEach {
-            if (it.isEmpty() && ConnectionManager.isConnected()) {
-              getMoreQuotes(PAGE_SIZE)
-            }
-          }
-          .flowOn(Dispatchers.IO)
-          .collect { handleQuotes(it) }
+    val quoteList: LiveData<List<Quote>>
+        get() = _quoteList
+
+    private val _quoteList: MutableLiveData<List<Quote>> = MutableLiveData()
+
+    init {
+        observeCacheUpdates()
     }
-  }
+
+    fun getMoreQuotes(numberOfQuotes: Int) {
+        updateCacheWithQuotesFromApi(numberOfQuotes)
+    }
+
+    private fun updateCacheWithQuotesFromApi(numberOfQuotes: Int) {
+        viewModelScope.launch(Dispatchers.IO) {
+            val quotes = repository.getApiQuotes(numberOfQuotes)
+            repository.updateCachedQuotes(quotes)
+        }
+    }
+
+    private fun observeCacheUpdates() {
+        viewModelScope.launch {
+            repository.getCachedQuotes()
+                .onEach {
+                    if (it.isEmpty() && ConnectionManager.isConnected()) {
+                        getMoreQuotes(PAGE_SIZE)
+                    }
+                }
+                .flowOn(Dispatchers.IO)
+                .collect { handleQuotes(it) }
+        }
+    }
 
 
-  private fun handleQuotes(quotes: List<Quote>) {
-    _quoteList.value = quotes
-  }
+    private fun handleQuotes(quotes: List<Quote>) {
+        _quoteList.value = quotes
+    }
 }

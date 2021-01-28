@@ -4,11 +4,8 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import androidx.navigation.fragment.FragmentNavigatorExtras
 import com.carintis.android.quotesapp.domain.Quote
 import com.carintis.android.quotesapp.domain.QuoteRepository
-import com.carintis.android.quotesapp.presentation.QuotesAdapter
-import com.carintis.android.quotesapp.presentation.quotes.QuoteListFragmentDirections
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.InternalCoroutinesApi
@@ -20,26 +17,26 @@ import kotlinx.coroutines.launch
 @InternalCoroutinesApi
 class FavoritesViewModel(private val repository: QuoteRepository) : ViewModel() {
 
-  val favoriteQuotes: LiveData<List<Quote>>
-      get() = _favoriteQuotes
+    val favoriteQuotes: LiveData<List<Quote>>
+        get() = _favoriteQuotes
 
-  private val _favoriteQuotes: MutableLiveData<List<Quote>> = MutableLiveData()
+    private val _favoriteQuotes: MutableLiveData<List<Quote>> = MutableLiveData()
 
-  init {
-    observeCacheUpdates()
-  }
-
-  private fun observeCacheUpdates() {
-    viewModelScope.launch {
-      repository.getCachedFavoriteQuotes()
-          .flowOn(Dispatchers.IO)
-          .collect { handleQuotes(it) }
+    init {
+        observeCacheUpdates()
     }
-  }
 
-  private fun handleQuotes(quotes: List<Quote>) {
-    _favoriteQuotes.value = quotes
-  }
+    private fun observeCacheUpdates() {
+        viewModelScope.launch {
+            repository.getCachedFavoriteQuotes()
+                .flowOn(Dispatchers.IO)
+                .collect { handleQuotes(it) }
+        }
+    }
+
+    private fun handleQuotes(quotes: List<Quote>) {
+        _favoriteQuotes.value = quotes
+    }
 
 
 }

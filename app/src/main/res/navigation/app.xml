@@ -4,7 +4,7 @@
     android:id="@+id/app"
     app:startDestination="@id/discoverList">
 
-  <include app:graph="@navigation/discover" />
-  <include app:graph="@navigation/favorites" />
-<!--  <include app:graph="@navigation/more" />-->
+    <include app:graph="@navigation/discover" />
+    <include app:graph="@navigation/favorites" />
+    <!--  <include app:graph="@navigation/more" />-->
 </navigation>

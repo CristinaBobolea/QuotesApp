@@ -33,12 +33,8 @@
     android:opacity="opaque">
   <item android:drawable="@color/colorPrimary" />
   <item
-      android:bottom="100dp"
-      android:left="100dp"
-      android:right="100dp"
-      android:top="100dp">
-    <bitmap
-        android:gravity="center"
-        android:src="@mipmap/ic_launcher" />
+      android:drawable="@drawable/ic_launcher_foreground"
+      android:gravity="center">
+
   </item>
 </layer-list>

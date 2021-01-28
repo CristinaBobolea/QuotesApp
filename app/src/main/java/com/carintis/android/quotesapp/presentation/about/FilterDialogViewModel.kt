@@ -1,14 +1,9 @@
 package com.carintis.android.quotesapp.presentation.about
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.carintis.android.quotesapp.domain.Quote
 import com.carintis.android.quotesapp.domain.QuoteRepository
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.flow.collect
-import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.launch
 
 class FilterDialogViewModel(private val repository: QuoteRepository) : ViewModel() {

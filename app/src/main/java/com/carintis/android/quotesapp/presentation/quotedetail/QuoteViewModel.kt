@@ -8,9 +8,9 @@ import kotlinx.coroutines.launch
 
 class QuoteViewModel(private val repository: QuoteRepository) : ViewModel() {
 
-  fun updateQuoteFavoriteStatus(quoteId: Long, isFavorite: Boolean) {
-    viewModelScope.launch(Dispatchers.IO) {
-      repository.updateQuoteFavoriteStatus(quoteId, isFavorite)
+    fun updateQuoteFavoriteStatus(quoteId: Long, isFavorite: Boolean) {
+        viewModelScope.launch(Dispatchers.IO) {
+            repository.updateQuoteFavoriteStatus(quoteId, isFavorite)
+        }
     }
-  }
 }

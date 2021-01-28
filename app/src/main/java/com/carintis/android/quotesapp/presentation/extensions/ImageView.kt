@@ -9,23 +9,23 @@ import com.bumptech.glide.request.target.CustomTarget
 import com.bumptech.glide.request.transition.Transition
 
 fun ImageView.load(imageAddress: String, onClick: (() -> Unit)? = null) {
-  val imageView = this
-  Glide.with(this)
-      .asBitmap()
-      .load(imageAddress)
-      .transition(withCrossFade())
-      .into(object : CustomTarget<Bitmap>() {
-        override fun onResourceReady(resource: Bitmap, transition: Transition<in Bitmap>?) {
-          imageView.apply {
-            setImageBitmap(resource)
-            setOnClickListener {
-              onClick?.invoke()
+    val imageView = this
+    Glide.with(this)
+        .asBitmap()
+        .load(imageAddress)
+        .transition(withCrossFade())
+        .into(object : CustomTarget<Bitmap>() {
+            override fun onResourceReady(resource: Bitmap, transition: Transition<in Bitmap>?) {
+                imageView.apply {
+                    setImageBitmap(resource)
+                    setOnClickListener {
+                        onClick?.invoke()
+                    }
+                }
             }
-          }
-        }
 
-        override fun onLoadCleared(placeholder: Drawable?) {
-          // Do nothing
-        }
-      })
+            override fun onLoadCleared(placeholder: Drawable?) {
+                // Do nothing
+            }
+        })
 }

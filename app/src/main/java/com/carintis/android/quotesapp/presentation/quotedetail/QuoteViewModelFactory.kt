@@ -7,13 +7,13 @@ import com.carintis.android.quotesapp.domain.QuoteRepository
 @Suppress("UNCHECKED_CAST")
 object QuoteViewModelFactory : ViewModelProvider.Factory {
 
-  private lateinit var repository: QuoteRepository
+    private lateinit var repository: QuoteRepository
 
-  fun inject(repository: QuoteRepository) {
-    QuoteViewModelFactory.repository = repository
-  }
+    fun inject(repository: QuoteRepository) {
+        QuoteViewModelFactory.repository = repository
+    }
 
-  override fun <T : ViewModel?> create(modelClass: Class<T>): T {
-    return QuoteViewModel(repository) as T
-  }
+    override fun <T : ViewModel?> create(modelClass: Class<T>): T {
+        return QuoteViewModel(repository) as T
+    }
 }

@@ -33,69 +33,66 @@ package com.carintis.android.quotesapp.data.api
 import android.util.Log
 import com.carintis.android.quotesapp.domain.Quote
 import com.squareup.moshi.Moshi
+import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
-import retrofit2.Call
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
 import retrofit2.http.GET
-import retrofit2.http.Header
-import retrofit2.http.Path
 import retrofit2.http.Query
-import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 
 interface Api {
-
-//  @GET("{numberOfImages}")
-//  suspend fun getQuotesImages(@Path("numberOfImages") numberOfImages: Int): QuotesResponse
+    @GET("?size=medium")
+    suspend fun getQuote(@Query("maxR") numberOfQuotes: Int): List<Quote>
 
     @GET("?size=medium")
-    suspend fun getQuote(@Query("maxR") numberOfQuotes : Int ): List<Quote>
-
-    @GET("?size=medium")
-    suspend fun getQuotes(@Query("maxR") numberOfQuotes : Int ) : List<Quote>
+    suspend fun getQuotes(@Query("maxR") numberOfQuotes: Int): List<Quote>
 
     @GET()
-    suspend fun getFilteredQuotes(@Query("maxR") numberOfQuotes : Int, @Query("t") topic : String, @Query("size") size : String = "medium") : List<Quote>
+    suspend fun getFilteredQuotes(
+        @Query("maxR") numberOfQuotes: Int,
+        @Query("t") topic: String,
+        @Query("size") size: String = "medium"
+    ): List<Quote>
 
     companion object {
-    private const val TAG = "Api"
+        private const val TAG = "Api"
 
-    fun create(): Api {
-      val retrofit = Retrofit.Builder()
-          .baseUrl(ApiConstants.API)
-          .client(okHttpClient)
-          .addConverterFactory(MoshiConverterFactory.create(moshi))
-          .build()
+        fun create(): Api {
+            val retrofit = Retrofit.Builder()
+                .baseUrl(ApiConstants.API)
+                .client(okHttpClient)
+                .addConverterFactory(MoshiConverterFactory.create(moshi))
+                .build()
 
-      return retrofit.create(Api::class.java)
-    }
+            return retrofit.create(Api::class.java)
+        }
 
         private val moshi = Moshi.Builder()
             .add(KotlinJsonAdapterFactory())
             .build()
 
-    private val okHttpClient: OkHttpClient
-      get() = OkHttpClient.Builder()
-          .addInterceptor(httpLoggingInterceptor)
-          .addInterceptor(
-              Interceptor { chain ->
-                  val builder = chain.request().newBuilder()
-                  builder.header("x-rapidapi-key", ApiConstants.KEY)
-                  builder.header("x-rapidapi-host", ApiConstants.HOST)
-                  return@Interceptor chain.proceed(builder.build())
-              }
-          )
-          .build()
+        private val okHttpClient: OkHttpClient
+            get() = OkHttpClient.Builder()
+                .addInterceptor(httpLoggingInterceptor)
+                .addInterceptor(
+                    Interceptor { chain ->
+                        val builder = chain.request().newBuilder()
+                        builder.header("x-rapidapi-key", ApiConstants.KEY)
+                        builder.header("x-rapidapi-host", ApiConstants.HOST)
+                        return@Interceptor chain.proceed(builder.build())
+                    }
+                )
+                .build()
 
-    private val httpLoggingInterceptor: HttpLoggingInterceptor
-      get() {
-        val interceptor = HttpLoggingInterceptor { message -> Log.i(TAG, message) }
+        private val httpLoggingInterceptor: HttpLoggingInterceptor
+            get() {
+                val interceptor = HttpLoggingInterceptor { message -> Log.i(TAG, message) }
 
-          interceptor.level = HttpLoggingInterceptor.Level.BASIC
+                interceptor.level = HttpLoggingInterceptor.Level.BASIC
 
-        return interceptor
-      }
-  }
+                return interceptor
+            }
+    }
 }
